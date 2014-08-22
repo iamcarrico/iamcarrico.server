@@ -1,0 +1,12 @@
+---
+##
+# Etckeeper
+#
+- name: Install etckeeper.
+  apt: pkg=etckeeper state=installed
+
+- name: etckeeper configuration file
+  template: src=etckeeper-conf.j2 dest=/etc/etckeeper/etckeeper.conf
+
+- name: Initialize etckeeper.
+  command: etckeeper init creates=/etc/.git

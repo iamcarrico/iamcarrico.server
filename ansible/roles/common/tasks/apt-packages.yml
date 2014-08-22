@@ -1,0 +1,22 @@
+---
+# Common packages that we just want installed.
+
+
+- name: Ensure the system can use the HTTPS transport for APT
+  stat: path=/usr/lib/apt/methods/https
+  register: apt_https_transport
+
+- name: Install HTTPS transport for apt
+  apt: pkg=apt-transport-https state=installed
+  when: not apt_https_transport.stat.exists
+
+- name: All Packages from apt-get
+  apt: name={{ item }} state=installed
+  with_items:
+    - git
+    - curl
+    - htop
+    - ntp
+    - sendmail
+    - mailutils
+    - unzip

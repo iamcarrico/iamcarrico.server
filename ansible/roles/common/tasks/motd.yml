@@ -1,0 +1,17 @@
+---
+##
+# Message of the day configuration.
+#
+
+
+- name: Message of the day explaining server is under Ansible control.
+  copy: src=95-ansible dest=/etc/update-motd.d/95-ansible mode=755
+
+- name: Disable default motd scripts.
+  file: path=/etc/update-motd.d/{{ item }} mode=444
+  with_items:
+    - 00-header
+    - 10-help-text
+
+- name: Disable default motd scripts.
+  file: path=/etc/update-motd.d/50-landscape-sysinfo state=absent

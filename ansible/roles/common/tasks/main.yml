@@ -1,0 +1,12 @@
+---
+# Common tasks that we just need.
+
+- name: Update Apt Cache
+  apt: update_cache=yes
+
+- include: apt-packages.yml tags=apt
+- include: editors.yml tags=editors
+- include: etckeeper.yml tags=etckeeper
+- include: motd.yml tags=motd
+- include: ssh.yml tags=ssh
+- include: tty.yml tags=tty

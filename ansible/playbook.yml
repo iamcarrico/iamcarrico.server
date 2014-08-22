@@ -1,0 +1,15 @@
+- name: "Server setup tasks"
+  hosts: all
+  sudo: yes
+  roles:
+   - common
+   - Ansibles.nginx
+#   - varnish
+#   - nodesource.nodejs
+#   - joshualund.ruby-2_0_0
+
+- name: Development Server
+  hosts: development
+  sudo: yes
+  roles:
+    - development

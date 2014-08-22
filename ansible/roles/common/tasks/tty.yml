@@ -1,0 +1,13 @@
+---
+##
+# Remove extra ttys
+#
+
+- name: Remove extra ttys
+  file: path=/etc/init/tty{{ item }}.conf state=absent
+  with_items:
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6

@@ -1,0 +1,29 @@
+---
+
+- name: Prerequisites for provisioning
+  apt: name=python-pycurl
+
+- name: Add official APT repository
+  apt_repository: repo='deb https://repo.varnish-cache.org/ubuntu/ trusty varnish-4.0' state=present
+  register: varnish_repo
+
+- name: Add Varnish apt key
+  apt_key: url="http://repo.varnish-cache.org/{{ansible_distribution|lower()}}/GPG-key.txt"
+  register: varnish_key
+
+- name: Update apt cache
+  apt: update_cache=yes
+  when: varnish_key.changed or varnish_repo.changed
+
+- name: Install Varnish
+  apt: name=varnish state=present
+
+- name: Configure Varnish
+  template: src=default.vcl.j2 dest=/etc/varnish/default.vcl
+  notify:
+    - restart varnish
+
+- name: Copy the daemon config file
+  template: src=varnish.j2 dest=/etc/default/varnish
+  notify:
+    - restart varnish
