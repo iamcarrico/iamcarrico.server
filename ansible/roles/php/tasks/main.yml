@@ -1,0 +1,9 @@
+---
+# Install PHP
+
+- name: Install PHP FastCGI
+  apt: name=php5-fpm state=installed
+
+- name: Configure PHP
+  template: src=php.ini.j2 dest=/etc/php5/fpm/php.ini
+  notify: restart php

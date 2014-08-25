@@ -3,8 +3,9 @@
   sudo: yes
   roles:
    - common
-   - Ansibles.nginx
-#   - varnish
+#   - Ansibles.nginx
+   - varnish
+   - php
 #   - nodesource.nodejs
 #   - joshualund.ruby-2_0_0
 

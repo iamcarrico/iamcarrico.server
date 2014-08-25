@@ -1,24 +1,5 @@
 nginx_sites:
   - server:
-      name: iamcarrico
-      listen: "443 ssl spdy"
-      server_name: "local.iamcarrico.com"
-      ssl_certificate: "/etc/nginx/ssl/server.crt"
-      ssl_certificate_key: "/etc/nginx/ssl/server.key"
-      etag: on
-      charset: "utf-8"
-      error_page: "404 /404.html"
-      spdy_headers_comp: 6
-      spdy_keepalive_timeout: 300
-      add_header: "\"X-UA-Compatible\" \"IE=Edge\""
-
-      access_log: "/var/log/nginx/iamcarrico.access.log"
-      location1:
-        name: "/"
-        try_files: "$uri $uri/ /index.html"
-        sendfile: "on"
-        root: "/home/vagrant/public_html"
-  - server:
       name: nohttp
       listen: "[::]:80"
       return: "301 https://$host$request_uri"
