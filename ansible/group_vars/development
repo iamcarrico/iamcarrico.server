@@ -1,5 +1,4 @@
-nginx_sites:
-  - server:
-      name: nohttp
-      listen: "[::]:80"
-      return: "301 https://$host$request_uri"
+---
+
+server_name: local.iamcarrico.com
+site_path: /home/vagrant/public_html

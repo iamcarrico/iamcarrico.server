@@ -1,26 +1,10 @@
 ---
 
-# Configure a development environment on the server
+
 
 - name: Creates directory for certs
   file: path=/etc/nginx/ssl state=directory
 
 - name: create self-signed SSL cert
   command: openssl req -new -nodes -x509 -subj "/C=US/ST=Texas/L=Austin/O=IT/CN=local.iamcarrico.com" -days 3650 -keyout /etc/nginx/ssl/server.key -out /etc/nginx/ssl/server.crt -extensions v3_ca creates=/etc/nginx/ssl/server.crt
-  notify: reload nginx
-
-- name: Create backend
-  template: src=iamcarrico.backend.j2 dest=/etc/nginx/sites-available/iamcarrico.backend
-  notify: reload nginx
-
-- name: Create frontend
-  template: src=iamcarrico.j2 dest=/etc/nginx/sites-available/iamcarrico
-  notify: reload nginx
-
-- name: Enable the backend
-  command: ln -s /etc/nginx/sites-available/iamcarrico.backend /etc/nginx/sites-enabled/iamcarrico.backend creates=/etc/nginx/sites-enabled/iamcarrico.backend
-  notify: reload nginx
-
-- name: Enable the frontend
-  command: ln -s /etc/nginx/sites-available/iamcarrico /etc/nginx/sites-enabled/iamcarrico creates=/etc/nginx/sites-enabled/iamcarrico
   notify: reload nginx

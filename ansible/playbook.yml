@@ -3,7 +3,7 @@
   sudo: yes
   roles:
    - common
-#   - Ansibles.nginx
+   - Ansibles.nginx
    - varnish
    - php
 #   - nodesource.nodejs
@@ -14,3 +14,9 @@
   sudo: yes
   roles:
     - development
+
+- name: Configure Site
+  hosts: all
+  sudo: yes
+  roles:
+    - site_config

@@ -1,0 +1,25 @@
+---
+
+# Configure a development environment on the server
+
+- name: Prevent non-ssl
+  copy: src=nohttp dest=/etc/nginx/sites-available/nohttp creates=/etc/nginx/sites-available/nohttp
+
+- name: Enable preventing ssl
+  command: ln -s /etc/nginx/sites-available/nohttp /etc/nginx/sites-enabled/nohttp creates=/etc/nginx/sites-enabled/nohttp
+
+- name: Create backend
+  template: src=iamcarrico.backend.j2 dest=/etc/nginx/sites-available/iamcarrico.backend
+  notify: restart nginx
+
+- name: Create frontend
+  template: src=iamcarrico.j2 dest=/etc/nginx/sites-available/iamcarrico
+  notify: restart nginx
+
+- name: Enable the backend
+  command: ln -s /etc/nginx/sites-available/iamcarrico.backend /etc/nginx/sites-enabled/iamcarrico.backend creates=/etc/nginx/sites-enabled/iamcarrico.backend
+  notify: restart nginx
+
+- name: Enable the frontend
+  command: ln -s /etc/nginx/sites-available/iamcarrico /etc/nginx/sites-enabled/iamcarrico creates=/etc/nginx/sites-enabled/iamcarrico
+  notify: restart nginx

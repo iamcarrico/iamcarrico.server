@@ -1,12 +1,15 @@
 server {
 	listen 443 ssl spdy;
-	server_name local.iamcarrico.com;
-	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+	server_name {{ server_name }};
+	# add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
 
 	spdy_keepalive_timeout 300; # up from 180 secs default
 	keepalive_timeout 300; # up from 75 secs default
 	# enable SPDY header compression
 	spdy_headers_comp 6;
+
+	# BEAST?
+	gzip off;
 
 	ssl on;
 	ssl_certificate /etc/nginx/ssl/server.crt;
@@ -21,7 +24,7 @@ server {
 	error_page 404 /404.html;
   error_page 500 502 503 504 /50x.html;
   location = /50x.html {
-    root /home/vagrant/public_html;
+    root {{ site_path }};
   }
 
 	location / {

@@ -1,0 +1,6 @@
+---
+
+# Production credentials
+
+server_name: iamcarrico.com
+site_path: /var/www/iamcarrico

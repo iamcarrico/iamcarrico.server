@@ -1,0 +1,6 @@
+---
+
+# Default vars
+
+server_name: localhost
+site_path: /srv/www/default
