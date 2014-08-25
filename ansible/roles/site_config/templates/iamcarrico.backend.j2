@@ -11,7 +11,12 @@ server {
 	access_log /var/log/nginx/iamcarrico.backend.acccess.log;
 	error_log /var/log/nginx/iamcarrico.backend.error.log;
 
+	# Prevent not Varnish from accessing.
+	allow 127.0.0.1;
+  deny all;
+
 	error_page  404 /404.html;
+	error_page 403 = 404;
 
 	location = /robots.txt {
   	allow all;
@@ -21,7 +26,7 @@ server {
 
 	# cache.appcache, your document html and data
 	location ~* \.(?:manifest|appcache|html?|xml|json)$ {
-	  expires -1;
+	  expires 24h;
 	  access_log logs/static.log;
 	}
 
@@ -46,7 +51,6 @@ server {
 	}
 
 	# WebFonts
-	# If you are NOT using cross-domain-fonts.conf, uncomment the following directive
 	 location ~* \.(?:ttf|ttc|otf|eot|woff)$ {
 	  expires 1M;
 	  access_log off;
@@ -56,7 +60,7 @@ server {
 	location / {
     sendfile on;
     root {{ site_path }};
-    try_files $uri $uri/ /index.html;
+    index index.html
   }
 
 	location ~ \.php$ {
