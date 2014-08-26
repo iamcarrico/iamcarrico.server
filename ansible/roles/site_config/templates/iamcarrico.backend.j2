@@ -57,6 +57,17 @@ server {
 	  add_header Cache-Control "public";
 	 }
 
+	# Prevent clients from accessing hidden files (starting with a dot)
+	# This is particularly important if you store .htpasswd files in the site hierarchy
+	location ~* (?:^|/)\. {
+	    deny all;
+	}
+
+	# Prevent clients from accessing to backup/config/source files
+	location ~* (?:\.(?:bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$ {
+	    deny all;
+	}
+
 	location / {
     sendfile on;
     root {{ site_path }};
@@ -73,4 +84,18 @@ server {
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     fastcgi_intercept_errors on;
   }
+
+	## 301 Redirects!
+	location /i-am-no-designer {
+		rewrite ^/.* https://$server_name/writings/i-am-no-designer/ permanent;
+	}
+	location /mobile-sites-are-over {
+		rewrite ^/.* https://$server_name/writings/mobile-sites-are-over/ permanent;
+	}
+	location /why-is-sxsw-so-succesful {
+		rewrite ^/.* https://$server_name/writings/why-is-sxsw-so-succesful/ permanent;
+	}
+	location /talks/2013/brining-magic-back {
+		rewrite ^/.* https://$server_name/talks/2013/bringing-magic-back/ permanent;
+	}
 }
