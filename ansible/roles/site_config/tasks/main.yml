@@ -2,8 +2,8 @@
 
 # Configure a development environment on the server
 
-- name: Prevent non-ssl
-  copy: src=nohttp dest=/etc/nginx/sites-available/nohttp
+- name: Prevent non-ssl and www.
+  template: src=nohttp.j2 dest=/etc/nginx/sites-available/nohttp
 
 - name: Enable preventing ssl
   command: ln -s /etc/nginx/sites-available/nohttp /etc/nginx/sites-enabled/nohttp creates=/etc/nginx/sites-enabled/nohttp
