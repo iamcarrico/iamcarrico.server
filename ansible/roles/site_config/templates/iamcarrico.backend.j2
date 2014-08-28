@@ -8,15 +8,14 @@ server {
 	real_ip_header     X-Forwarded-For;
 	real_ip_recursive on;
 
+	# This isn't working I dont think?
+	gzip_vary on;
+
 	access_log /var/log/nginx/iamcarrico.backend.acccess.log;
 	error_log /var/log/nginx/iamcarrico.backend.error.log;
 
-	# Prevent not Varnish from accessing.
-	allow 127.0.0.1;
-  deny all;
-
 	error_page  404 /404.html;
-	error_page 403 = 404;
+	#error_page 403 = 404;
 
 	location = /robots.txt {
   	allow all;
@@ -71,7 +70,7 @@ server {
 	location / {
     sendfile on;
     root {{ site_path }};
-    index index.html
+    index index.html;
   }
 
 	location ~ \.php$ {

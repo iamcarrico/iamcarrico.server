@@ -45,7 +45,7 @@ sub vcl_recv {
 }
 
 sub vcl_hash {
-    hash_data(req.http.cookie);
+  hash_data(req.http.cookie);
 }
 
 sub vcl_backend_response {

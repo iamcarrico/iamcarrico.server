@@ -1,9 +1,22 @@
 ---
 # Install PHP
 
-- name: Install PHP FastCGI
-  apt: name=php5-fpm state=installed
+- name: Install PHP FastCGI and required 
+  apt: name={{ item }} state=installed
+  with_items:
+    - php5-fpm
+    - php5-cli
+    - php5-curl
 
 - name: Configure PHP
   template: src=php.ini.j2 dest=/etc/php5/fpm/php.ini
   notify: restart php
+
+- name: Install Composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin creates=/usr/local/bin/composer
+
+- name: Rename composer.phar to composer
+  shell: mv /usr/local/bin/composer.phar /usr/local/bin/composer creates=/usr/local/bin/composer
+
+- name: Ensure is composer executable
+  shell: chmod a+x /usr/local/bin/composer

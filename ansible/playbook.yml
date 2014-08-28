@@ -3,7 +3,7 @@
   sudo: yes
   roles:
    - common
-   - Ansibles.nginx
+#   - Ansibles.nginx
    - varnish
    - php
 #   - nodesource.nodejs
