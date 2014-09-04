@@ -8,9 +8,6 @@ server {
 	real_ip_header     X-Forwarded-For;
 	real_ip_recursive on;
 
-	# This isn't working I dont think?
-	gzip_vary on;
-
 	access_log /var/log/nginx/iamcarrico.backend.acccess.log;
 	error_log /var/log/nginx/iamcarrico.backend.error.log;
 
@@ -46,7 +43,8 @@ server {
 	location ~* \.(?:css|js)$ {
 	  expires 1y;
 	  access_log off;
-	  add_header Cache-Control "public";
+		add_header Cache-Control "public";
+		add_header Vary "Accept-Encoding";
 	}
 
 	# WebFonts
