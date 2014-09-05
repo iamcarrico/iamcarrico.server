@@ -1,0 +1,16 @@
+---
+
+- name: Create a directory for certs
+  file: path=/etc/nginx/ssl state=directory
+
+- name: Create a self-signed SSL cert
+  command: openssl req -new -nodes -x509 -subj "/C=US/ST=Texas/L=Austin/O=IT/CN={{ ansible_fqdn }}" -days 3650 -keyout /etc/nginx/ssl/selfsigned.key -out /etc/nginx/ssl/selfsigned.crt -extensions v3_ca creates=/etc/nginx/ssl/selfsigned.crt
+  notify: reload nginx
+
+- name: Create self-signed site
+  template: src=selfsigned.j2 dest=/etc/nginx/sites-available/selfsigned
+  notify: restart nginx
+
+- name: Enable the self-signed site
+  command: ln -s /etc/nginx/sites-available/selfsigned /etc/nginx/sites-enabled/selfsigned creates=/etc/nginx/sites-enabled/selfsigned
+  notify: restart nginx

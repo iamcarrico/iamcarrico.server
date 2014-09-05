@@ -14,7 +14,4 @@ You also must have the following Ansible galaxy roles installed:
 
 ```bash
 $ ansible-galaxy install Ansibles.nginx
-$ ansible-galaxy install zenoamaro.varnish
-$ ansible-galaxy install nodesource.nodejs
-$ ansible-galaxy install joshualund.ruby-2_0_0
 ```

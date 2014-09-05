@@ -3,11 +3,9 @@
   sudo: yes
   roles:
    - common
-#   - Ansibles.nginx
+   - { role: Ansibles.nginx, when: "nginx_installed == false" }
    - varnish
    - php
-#   - nodesource.nodejs
-#   - joshualund.ruby-2_0_0
 
 - name: Development Server
   hosts: development
@@ -15,8 +13,9 @@
   roles:
     - development
 
-- name: Configure Site
+- name: Configure Sites
   hosts: all
   sudo: yes
   roles:
     - site_config
+    - certs
