@@ -1,0 +1,4 @@
+#!/bin/sh
+
+printf "This is: %s\n" "$(hostname --fqdn)"
+printf "\n"

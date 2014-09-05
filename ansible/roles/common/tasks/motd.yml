@@ -4,8 +4,11 @@
 #
 
 
-- name: Message of the day explaining server is under Ansible control.
+- name: MOTD explaining server is under Ansible control.
   copy: src=95-ansible dest=/etc/update-motd.d/95-ansible mode=755
+
+- name: MOTD showing the hostname.
+  copy: src=96-fqdn dest=/etc/update-motd.d/96-fqdn mode=755
 
 - name: Disable default motd scripts.
   file: path=/etc/update-motd.d/{{ item }} mode=444
