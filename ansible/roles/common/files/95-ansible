@@ -7,7 +7,5 @@ echo " | Welcome to the server for Ian Carrico. It is a lovely little server    
 echo " | and has been very good to us. But, it uses Ansible to make changes, so     |"
 echo " | don't make changes unless you are doing it through Ansible.                |"
 echo " |                                                                            |"
-echo " | This server is: {{ ansible_fqdn }} "
-echo " |                                                                            |"
 echo " +----------------------------------------------------------------------------+"
 echo
