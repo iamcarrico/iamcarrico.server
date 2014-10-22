@@ -25,7 +25,7 @@ sub vcl_recv {
     # rewriting the request, etc.
 
 
-    if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|woff|eot|svg|ttf)(\?.*)?$") {
+    if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|woff|eot|svg|ttf|html)(\?.*)?$") {
       unset req.http.Cookie;
     }
 
@@ -54,7 +54,7 @@ sub vcl_backend_response {
     # Here you clean the response headers, removing silly Set-Cookie headers
     # and other mistakes your backend does.
 
-    if (bereq.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|woff|eot|svg|ttf)(\?.*)?$") {
+    if (bereq.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|woff|eot|svg|ttf|html)(\?.*)?$") {
         unset beresp.http.set-cookie;
     } else {
        set beresp.do_esi = true;
