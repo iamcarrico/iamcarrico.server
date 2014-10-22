@@ -1,7 +1,7 @@
 server {
 	listen 443 ssl spdy;
 	server_name {{ server_name }};
-	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
 
 	spdy_keepalive_timeout 300; # up from 180 secs default
 	keepalive_timeout 300; # up from 75 secs default
