@@ -29,12 +29,11 @@ sub vcl_recv {
       unset req.http.Cookie;
     }
 
-
     ## We remove all cookies, except those that effect page load.
     if (req.http.Cookie) {
       set req.http.Cookie = ";" + req.http.Cookie;
       set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-      set req.http.Cookie = regsuball(req.http.Cookie, ";(iamFonts|iamCSS)=", "; \1=");
+      set req.http.Cookie = regsuball(req.http.Cookie, ";(iF|iC)=", "; \1=");
       set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
       set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
 
@@ -55,10 +54,14 @@ sub vcl_backend_response {
     # and other mistakes your backend does.
 
     if (bereq.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|woff|eot|svg|ttf|html)(\?.*)?$") {
-        unset beresp.http.set-cookie;
+      unset beresp.http.set-cookie;
     } else {
-       set beresp.do_esi = true;
-       set beresp.ttl = 24h;
+      set beresp.do_esi = true;
+      set beresp.ttl = 24h;
+    }
+
+    if (beresp.http.x-do-not-cache) {
+      set beresp.ttl = 0s;
     }
 }
 
