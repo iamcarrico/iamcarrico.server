@@ -1,9 +1,13 @@
 newyork.iamcarrico.com
 amsterdam.iamcarrico.com
+singapore.iamcarrico.com
+sanfrancisco.iamcarrico.com
 
 [production]
 newyork.iamcarrico.com
 amsterdam.iamcarrico.com
+singapore.iamcarrico.com
+sanfrancisco.iamcarrico.com
 
 [development]
 local.iamcarrico.com
