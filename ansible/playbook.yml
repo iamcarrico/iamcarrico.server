@@ -3,7 +3,7 @@
   sudo: yes
   roles:
    - common
-   - { role: Ansibles.nginx, when: "nginx_installed == false" }
+   - Ansibles.nginx
    - varnish
    - php
 

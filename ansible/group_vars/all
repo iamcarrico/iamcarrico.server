@@ -1,14 +1,4 @@
 ---
 # Variables for all instances.
 
-npm_packages:
-  - bower
-  - coffee-script
-  - forever
-  - grunt-cli
-  - jshint
-  - node-inspector
-  - yo
-  - drush-reloadp
-
 nginx_source_version: 1.6.1

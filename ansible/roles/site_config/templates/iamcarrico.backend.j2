@@ -22,7 +22,7 @@ server {
 
 	# cache.appcache, your document html and data
 	location ~* \.(?:manifest|appcache|html?|xml|json)$ {
-	  expires 24h;
+	  expires -1;
 	  access_log logs/static.log;
 	}
 
