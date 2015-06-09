@@ -1,21 +1,12 @@
 - name: "First time setup tasks"
   hosts: all
-  sudo: yes
+  remote_user: root
+  vars_prompt:
+    - name: "username"
+      prompt: "Username to add to the box?"
+      default: "ian"
+    - name: "github"
+      prompt: "GitHub username (to get ssh keys)?"
+      default: "iamcarrico"
   roles:
-   - common
-   - Ansibles.nginx
-   - varnish
-   - php
-
-- name: Development Server
-  hosts: development
-  sudo: yes
-  roles:
-    - development
-
-- name: Configure Sites
-  hosts: all
-  sudo: yes
-  roles:
-    - site_config
-    - certs
+    - setup

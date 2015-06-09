@@ -15,7 +15,10 @@
 - name: Create a deployment user (dploy.io)
   user: name=dploy shell=/bin/bash group=deployment
 
-- name: Grant dploy partial sudo abilities
+- name: Copy of dploy's public key.
+  copy: src=dploy_public dest=/home/dploy/.ssh/authorized_keys mode=0600
+
+- name: Grant deployment group partial sudo abilities
   copy: src=deployment_sudo dest=/etc/sudoers.d/deployment mode=0440
 
 - name: Create the site folder
