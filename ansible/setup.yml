@@ -1,0 +1,21 @@
+- name: "First time setup tasks"
+  hosts: all
+  sudo: yes
+  roles:
+   - common
+   - Ansibles.nginx
+   - varnish
+   - php
+
+- name: Development Server
+  hosts: development
+  sudo: yes
+  roles:
+    - development
+
+- name: Configure Sites
+  hosts: all
+  sudo: yes
+  roles:
+    - site_config
+    - certs

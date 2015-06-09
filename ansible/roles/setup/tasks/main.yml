@@ -1,0 +1,22 @@
+---
+
+- name: Create deployment group
+  group: name=deployment state=present
+
+- name: Create a new user to maintain box.
+  user: name={{ username }} shell=/bin/bash groups=deployment append=yes
+
+- name: Pull down the ssh keys for the user
+  get_url: url=https://github.com/{{ github }}.keys dest=/home/{{ username }}/.ssh/authorized_keys mode=0600
+
+- name: Create proper sudo permissions for username.
+  template: src=me_sudo.j2 dest=/etc/sudoers.d/{{ username }} mode=0440
+
+- name: Create a deployment user (dploy.io)
+  user: name=dploy shell=/bin/bash group=deployment
+
+- name: Grant dploy partial sudo abilities
+  copy: src=deployment_sudo dest=/etc/sudoers.d/deployment mode=0440
+
+- name: Create the site folder
+  file: path={{ site_path }} owner={{ username }} group=deployment state=directory mode=0775

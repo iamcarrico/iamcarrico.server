@@ -1,2 +1,0 @@
----
-nginx_installed: true

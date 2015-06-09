@@ -1,0 +1,6 @@
+---
+
+# Staging credentials
+
+server_name: stage.iamcarrico.com
+site_path: /var/www/iamcarrico

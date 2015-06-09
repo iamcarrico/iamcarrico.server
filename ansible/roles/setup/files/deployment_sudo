@@ -1,0 +1,2 @@
+# Allow membes of deployment to execute deployment commands.
+%deployment ALL=NOPASSWD:/etc/init.d/varnish restart
