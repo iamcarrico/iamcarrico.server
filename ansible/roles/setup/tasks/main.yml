@@ -6,8 +6,14 @@
 - name: Create a new user to maintain box.
   user: name={{ username }} shell=/bin/bash groups=deployment append=yes
 
+- name: Create .ssh folder for the user
+  file: path=/home/{{ username }}/.ssh owner={{ username }} group={{ username }} state=directory mode=0775
+
 - name: Pull down the ssh keys for the user
   get_url: url=https://github.com/{{ github }}.keys dest=/home/{{ username }}/.ssh/authorized_keys mode=0600
+
+- name: Set the right permissions for the .ssh keys
+  file: path=/home/{{ username }}/.ssh/authorized_keys owner={{ username }} group={{ username }}
 
 - name: Create proper sudo permissions for username.
   template: src=me_sudo.j2 dest=/etc/sudoers.d/{{ username }} mode=0440
@@ -15,11 +21,20 @@
 - name: Create a deployment user (dploy.io)
   user: name=dploy shell=/bin/bash group=deployment
 
+- name: Create .ssh folder for dploy
+  file: path=/home/dploy/.ssh/ owner=dploy state=directory mode=0775
+
 - name: Copy of dploy's public key.
   copy: src=dploy_public dest=/home/dploy/.ssh/authorized_keys mode=0600
 
+- name: Set the right permissions for the .ssh keys
+  file: path=/home/dploy/.ssh/authorized_keys owner=dploy group=deployment
+
 - name: Grant deployment group partial sudo abilities
   copy: src=deployment_sudo dest=/etc/sudoers.d/deployment mode=0440
+
+- name: Create the www filder
+  file: path=/var/www owner={{ username }} group=deployment state=directory mode=0775
 
 - name: Create the site folder
   file: path={{ site_path }} owner={{ username }} group=deployment state=directory mode=0775
