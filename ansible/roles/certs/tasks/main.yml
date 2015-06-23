@@ -3,6 +3,9 @@
 - name: Create a directory for certs
   file: path=/etc/nginx/ssl state=directory
 
+- name: Create a Unique DH group https://weakdh.org/sysadmin.html
+  command: openssl dhparam -out /etc/nginx/ssl/dhparams.pem 2048 creates=/etc/nginx/ssl/dhparams.pem
+
 - name: Create a self-signed SSL cert
   command: openssl req -new -nodes -x509 -subj "/C=US/ST=Texas/L=Austin/O=IT/CN={{ ansible_fqdn }}" -days 3650 -keyout /etc/nginx/ssl/selfsigned.key -out /etc/nginx/ssl/selfsigned.crt -extensions v3_ca creates=/etc/nginx/ssl/selfsigned.crt
   notify: reload nginx
