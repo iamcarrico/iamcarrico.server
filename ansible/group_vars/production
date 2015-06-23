@@ -4,3 +4,7 @@
 
 server_name: iamcarrico.com
 site_path: /var/www/iamcarrico
+
+nginx_worker_processes: 12
+nginx_worker_rlimit_nofile: 2048
+nginx_worker_connections: 2048

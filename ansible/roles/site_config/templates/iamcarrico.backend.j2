@@ -8,7 +8,7 @@ server {
 	real_ip_header     X-Forwarded-For;
 	real_ip_recursive on;
 
-	access_log /var/log/nginx/iamcarrico.backend.acccess.log;
+	access_log off;
 	error_log /var/log/nginx/iamcarrico.backend.error.log;
 
 	error_page  404 /404.html;

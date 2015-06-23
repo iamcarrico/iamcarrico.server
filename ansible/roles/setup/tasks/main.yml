@@ -22,7 +22,7 @@
   user: name=dploy shell=/bin/bash group=deployment
 
 - name: Create .ssh folder for dploy
-  file: path=/home/dploy/.ssh/ owner=dploy state=directory mode=0775
+  file: path=/home/dploy/.ssh/ owner=dploy group=deployment state=directory mode=0700
 
 - name: Copy of dploy's public key.
   copy: src=dploy_public dest=/home/dploy/.ssh/authorized_keys mode=0600
