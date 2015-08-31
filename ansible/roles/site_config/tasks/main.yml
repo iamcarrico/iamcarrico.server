@@ -23,3 +23,15 @@
 - name: Enable the frontend
   command: ln -s /etc/nginx/sites-available/iamcarrico /etc/nginx/sites-enabled/iamcarrico creates=/etc/nginx/sites-enabled/iamcarrico
   notify: restart nginx
+
+- name: Create all redirects
+  template: src=redirect.j2 dest=/etc/nginx/sites-available/redirect
+  notify: restart nginx
+  tags:
+     - redirect
+
+- name: Enable redirects
+  command: ln -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/redirect creates=/etc/nginx/sites-enabled/redirect
+  notify: restart nginx
+  tags:
+     - redirect

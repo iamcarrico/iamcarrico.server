@@ -5,6 +5,12 @@
 server_name: iamcarrico.com
 site_path: /var/www/iamcarrico
 
+redirect_domains:
+  - 'iancarrico.com'
+  - '*.iancarrico.com'
+  - 'carri.co'
+  - '*.carri.co'
+
 nginx_worker_processes: 12
 nginx_worker_rlimit_nofile: 2048
 nginx_worker_connections: 2048

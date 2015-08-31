@@ -1,0 +1,5 @@
+server {
+	listen [::]:80;
+	server_name {{ redirect_domains|join(' ') }};
+	return 301 https://iamcarrico.com;
+}
