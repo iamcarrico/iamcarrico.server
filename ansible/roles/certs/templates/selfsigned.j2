@@ -1,12 +1,7 @@
 server {
-	listen 443 ssl spdy;
+	listen 443 ssl http2;
 	server_name {{ ansible_fqdn }};
 	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
-
-	spdy_keepalive_timeout 300; # up from 180 secs default
-	keepalive_timeout 300; # up from 75 secs default
-	# enable SPDY header compression
-	spdy_headers_comp 6;
 
 	ssl on;
 	ssl_certificate /etc/nginx/ssl/selfsigned.crt;

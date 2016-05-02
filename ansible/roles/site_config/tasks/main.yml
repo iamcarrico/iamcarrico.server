@@ -27,11 +27,14 @@
 - name: Create all redirects
   template: src=redirect.j2 dest=/etc/nginx/sites-available/redirect
   notify: restart nginx
+  when: redirect_domains is defined
+  register: redirects_added
   tags:
      - redirect
 
 - name: Enable redirects
-  command: ln -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/redirect creates=/etc/nginx/sites-enabled/redirect
+  file: src=/etc/nginx/sites-available/redirect dest=/etc/nginx/sites-enabled/redirect state=link
   notify: restart nginx
+  when: redirect_domains is defined
   tags:
      - redirect

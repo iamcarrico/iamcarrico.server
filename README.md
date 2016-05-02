@@ -1,6 +1,6 @@
 # I. Am. Carrico. Server
 
-These are the playbooks used for the I. Am. Carrico. servers. 
+These are the playbooks used for the I. Am. Carrico. servers.
 
 ## Requirements
 
@@ -13,5 +13,5 @@ $ brew install ansible
 You also must have the following Ansible galaxy roles installed:
 
 ```bash
-$ ansible-galaxy install Ansibles.nginx
+$ ansible-galaxy install ANXS.nginx
 ```

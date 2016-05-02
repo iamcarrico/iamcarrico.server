@@ -1,21 +1,22 @@
 - name: "Server setup tasks"
   hosts: all
-  sudo: yes
+  become: true
   roles:
    - common
-   - Ansibles.nginx
+   - ANXS.nginx
    - varnish
    - php
 
 - name: Development Server
   hosts: development
-  sudo: yes
+  become: true
   roles:
     - development
 
 - name: Configure Sites
+  tags: site_config
   hosts: all
-  sudo: yes
+  become: true
   roles:
     - site_config
     - certs
