@@ -10,6 +10,10 @@ redirect_domains:
   - '*.iancarrico.com'
   - 'carri.co'
   - '*.carri.co'
+  - 'ncarri.co'
+  - '*.ncarri.co'
+  - 'xn--eytr1bb36b.com'
+  - '*.xn--eytr1bb36b.com'
 
 nginx_worker_processes: 12
 nginx_worker_rlimit_nofile: 2048
