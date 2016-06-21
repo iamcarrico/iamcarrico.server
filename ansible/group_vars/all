@@ -1,6 +1,7 @@
 ---
 # Variables for all instances.
 
+openssl_version: "1.0.2h"
 nginx_source_version: 1.10.0
 nginx_source_modules_included:
   http_v2_module: "--with-http_v2_module"
