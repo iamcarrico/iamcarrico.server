@@ -18,5 +18,5 @@
   hosts: all
   become: true
   roles:
-    - site_config
     - certs
+    - site_config

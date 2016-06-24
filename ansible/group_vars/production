@@ -4,6 +4,7 @@
 
 server_name: iamcarrico.com
 site_path: /var/www/iamcarrico
+direct_site: true
 
 redirect_domains:
   - 'iancarrico.com'

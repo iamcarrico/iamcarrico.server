@@ -8,6 +8,11 @@
 - name: Enable preventing ssl
   command: ln -s /etc/nginx/sites-available/nohttp /etc/nginx/sites-enabled/nohttp creates=/etc/nginx/sites-enabled/nohttp
 
+
+- name: Set the server name for our base server.
+  set_fact:
+    server_name_template: "{{ server_name }}"
+
 - name: Create backend
   template: src=iamcarrico.backend.j2 dest=/etc/nginx/sites-available/iamcarrico.backend
   notify: restart nginx
@@ -16,12 +21,29 @@
   template: src=iamcarrico.j2 dest=/etc/nginx/sites-available/iamcarrico
   notify: restart nginx
 
+- name: Set the server name for secondary server.
+  set_fact:
+    server_name_template: "{{ ansible_fqdn }}"
+  when: direct_site == true
+  tags: direct_site
+
+- name: Create directly accesible site.
+  template: src=iamcarrico.j2 dest=/etc/nginx/sites-available/{{ ansible_fqdn }}
+  when: direct_site == true
+  tags: direct_site
+
+- name: Enable directly accessible site.
+  file: src=/etc/nginx/sites-available/{{ ansible_fqdn }} dest=/etc/nginx/sites-enabled/{{ ansible_fqdn }} state=link
+  notify: restart nginx
+  when: direct_site == true
+  tags: direct_site
+
 - name: Enable the backend
-  command: ln -s /etc/nginx/sites-available/iamcarrico.backend /etc/nginx/sites-enabled/iamcarrico.backend creates=/etc/nginx/sites-enabled/iamcarrico.backend
+  file: src=/etc/nginx/sites-available/iamcarrico.backend dest=/etc/nginx/sites-enabled/iamcarrico.backend
   notify: restart nginx
 
 - name: Enable the frontend
-  command: ln -s /etc/nginx/sites-available/iamcarrico /etc/nginx/sites-enabled/iamcarrico creates=/etc/nginx/sites-enabled/iamcarrico
+  file: src=/etc/nginx/sites-available/iamcarrico dest=/etc/nginx/sites-enabled/iamcarrico
   notify: restart nginx
 
 - name: Create all redirects
@@ -38,3 +60,11 @@
   when: redirect_domains is defined
   tags:
      - redirect
+
+- name: Remove sites that we do not want available.
+  file: path={{ item }} state=absent
+  with_items:
+    - /etc/nginx/sites-enabled/selfsigned
+    - /etc/nginx/sites-enabled/default
+    - /etc/nginx/sites-enabled/nginx_status
+  notify: restart nginx
