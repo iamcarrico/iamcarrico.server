@@ -8,8 +8,8 @@
 - name: Enable preventing ssl
   command: ln -s /etc/nginx/sites-available/nohttp /etc/nginx/sites-enabled/nohttp creates=/etc/nginx/sites-enabled/nohttp
 
-
 - name: Set the server name for our base server.
+  tags: frontend
   set_fact:
     server_name_template: "{{ server_name }}"
 
@@ -20,6 +20,7 @@
 - name: Create frontend
   template: src=iamcarrico.j2 dest=/etc/nginx/sites-available/iamcarrico
   notify: restart nginx
+  tags: frontend
 
 - name: Set the server name for secondary server.
   set_fact:

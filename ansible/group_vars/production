@@ -3,6 +3,7 @@
 # Production credentials
 
 server_name: iamcarrico.com
+primary_server: newyork.iamcarrico.com
 site_path: /var/www/iamcarrico
 direct_site: true
 

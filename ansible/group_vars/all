@@ -1,6 +1,8 @@
 ---
 # Variables for all instances.
 
+direct_site: false
+
 openssl_version: "1.0.2h"
 nginx_source_version: 1.10.0
 nginx_source_modules_included:

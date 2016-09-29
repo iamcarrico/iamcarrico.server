@@ -6,10 +6,16 @@ server {
 	server_name {{ server_name_template }};
 	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
 
+	# Access and error logs stored by server name.
+	access_log /var/log/nginx/{{ server_name_template }}.access.log;
+	error_log /var/log/nginx/{{ server_name_template }}.error.log;
+
 	ssl on;
 	ssl_certificate /etc/letsencrypt/live/{{ server_name_template }}/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/{{ server_name_template }}/privkey.pem;
 
+	# Oddly, SSL isn't listed for SSL protocols. Because it is outdated and
+	# insecure.
 	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 
 	# From mozilla-server-team
@@ -17,14 +23,31 @@ server {
 	ssl_prefer_server_ciphers on;
 	ssl_dhparam /etc/nginx/ssl/dhparams.pem;
 
+	# Session resumption
 	ssl_session_timeout 5m;
-  ssl_session_cache shared:SSL:5m;
+	ssl_session_cache shared:SSL:5m;
 
+	# Error pages go directly to a self-contained file.
 	error_page 404 /404.html;
 	error_page 500 502 503 504 /50x.html;
 	location = /50x.html {
 		root {{ site_path }};
 	}
+
+	{# Note: This will give different output for the primary server, and all other servers. This is to ensure Let's Encrypt can always renew. #}
+	# Let's Encrypt root— this is for testing to ensure we have the right domain.
+	location /.well-known/ {
+{% if (server_name_template is equalto "iamcarrico.com") and (primary_server is defined) and (ansible_fqdn is not equalto primary_server) %}
+		proxy_pass https://{{ primary_server }};
+		access_log /var/log/nginx/iamcarrico.letsencrypt.remote.access.log;
+		error_log /var/log/nginx/iamcarrico.letsencrypt.remote.error.log;
+{% else %}
+		root /var/www/acme-challenge/;
+		access_log /var/log/nginx/iamcarrico.letsencrypt.access.log;
+		error_log /var/log/nginx/iamcarrico.letsencrypt.error.log;
+{% endif %}
+	}
+
 
 	location / {
 		proxy_pass	http://127.0.0.1:8888;
