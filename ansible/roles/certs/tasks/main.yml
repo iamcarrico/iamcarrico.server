@@ -7,7 +7,10 @@
   get_url: url=https://dl.eff.org/certbot-auto dest=/root/certbot-auto mode=0774
   tags: letsencrypt
 
-- name: Create a directory for certs
+- name: Create a directory for the Let's Encrypt confirmation
+  file: path=/var/www/acme-challenge/ state=directory
+
+- name: Create a directory for Diffie Hellman group.
   file: path=/etc/nginx/ssl state=directory
 
 - name: Create a Unique DH group https://weakdh.org/sysadmin.html
